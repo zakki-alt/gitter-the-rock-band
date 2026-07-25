@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Tebak Angka</title>
+  <style>
+    body{
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg,#4f46e5,#06b6d4);
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+    }
+    .card{
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      padding: 24px;
+      border-radius: 20px;
+      max-width: 360px;
+      width: 90%;
+      box-shadow: 0 10px 30px rgba(0,0,0,.2);
+    }
+    h1{ margin-top:0; font-size:28px; }
+    input, button{
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:12px;
+      font-size:16px;
+      margin-top:10px;
+      box-sizing:border-box;
+    }
+    input{ outline:none; }
+    button{
+      background:#fff;
+      color:#111827;
+      font-weight:bold;
+    }
+    button:active{ transform: scale(.98); }
+    #pesan{
+      margin-top:14px;
+      font-weight:bold;
+      min-height:24px;
+    }
+    .small{
+      opacity:.9;
+      font-size:14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Tebak Angka</h1>
+    <p class="small">Saya memilih angka 1 sampai 10. Coba tebak!</p>
+
+    <input id="tebakan" type="number" min="1" max="10" placeholder="Masukkan angka 1-10" />
+    <button onclick="cekTebakan()">Tebak</button>
+    <button onclick="resetGame()" style="background:#e5e7eb;color:#111827;">Main Lagi</button>
+
+    <div id="pesan"></div>
+    <p class="small">Skor: <span id="skor">0</span></p>
+  </div>
+
+  <script>
+    let angkaRahasia = Math.floor(Math.random() * 10) + 1;
+    let skor = 0;
+
+    function cekTebakan() {
+      const tebakan = Number(document.getElementById('tebakan').value);
+      const pesan = document.getElementById('pesan');
+
+      if (!tebakan || tebakan < 1 || tebakan > 10) {
+        pesan.textContent = 'Masukkan angka 1 sampai 10.';
+        return;
+      }
+
+      if (tebakan === angkaRahasia) {
+        skor++;
+        document.getElementById('skor').textContent = skor;
+        pesan.textContent = 'Benar! Angka baru sudah dipilih.';
+        angkaRahasia = Math.floor(Math.random() * 10) + 1;
+      } else {
+        pesan.textContent = tebakan < angkaRahasia ? 'Terlalu kecil.' : 'Terlalu besar.';
+      }
+
+      document.getElementById('tebakan').value = '';
+      document.getElementById('tebakan').focus();
+    }
+
+    function resetGame() {
+      angkaRahasia = Math.floor(Math.random() * 10) + 1;
+      document.getElementById('tebakan').value = '';
+      document.getElementById('pesan').textContent = 'Game direset. Coba lagi!';
+    }
+  </script>
+</body>
+                                                                                       </html>
